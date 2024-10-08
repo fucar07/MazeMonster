@@ -4180,6 +4180,21 @@ err)}}};
 // scripts/shaders.js
 {
 self["C3_Shaders"] = {};
+self["C3_Shaders"]["sepia"] = {
+	glsl: "varying mediump vec2 vTex;\nuniform lowp sampler2D samplerFront;\nuniform lowp float intensity;\nvoid main(void)\n{\nlowp vec4 front = texture2D(samplerFront, vTex);\nlowp vec4 sepia = front * mat4( 0.3588, 0.7044, 0.1368, 0.0,\n0.2990, 0.5870, 0.1140, 0.0,\n0.2392, 0.4696, 0.0912, 0.0,\n0.0,\t0.0,\t0.0,\t1.0);\ngl_FragColor = mix(front, vec4(sepia.r, sepia.g, sepia.b, front.a), intensity);\n}",
+	glslWebGL2: "",
+	wgsl: "%%SAMPLERFRONT_BINDING%% var samplerFront : sampler;\n%%TEXTUREFRONT_BINDING%% var textureFront : texture_2d<f32>;\nstruct ShaderParams {\nintensity : f32\n};\n%%SHADERPARAMS_BINDING%% var<uniform> shaderParams : ShaderParams;\n%%FRAGMENTINPUT_STRUCT%%\n%%FRAGMENTOUTPUT_STRUCT%%\nconst sepiaMatrix : mat4x4<f32> = mat4x4<f32>(\nvec4<f32>(0.3588, 0.7044, 0.1368, 0.0),\nvec4<f32>(0.2990, 0.5870, 0.1140, 0.0),\nvec4<f32>(0.2392, 0.4696, 0.0912, 0.0),\nvec4<f32>(0.0,\t0.0,\t0.0,\t1.0)\n);\n@fragment\nfn main(input : FragmentInput) -> FragmentOutput\n{\nvar front : vec4<f32> = textureSample(textureFront, samplerFront, input.fragUV);\nvar sepia : vec4<f32> = front * sepiaMatrix;\nvar output : FragmentOutput;\noutput.color = mix(front, vec4<f32>(sepia.rgb, front.a), shaderParams.intensity);\nreturn output;\n}",
+	blendsBackground: false,
+	usesDepth: false,
+	extendBoxHorizontal: 0,
+	extendBoxVertical: 0,
+	crossSampling: false,
+	mustPreDraw: false,
+	preservesOpaqueness: true,
+	supports3dDirectRendering: false,
+	animated: false,
+	parameters: [["intensity",0,"percent"]]
+};
 
 }
 
@@ -4866,7 +4881,7 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
-			return () => Math.round((f0(1, v1.GetValue()) * 42));
+			return () => Math.round((f0(1, v1.GetValue()) * 64));
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -4886,10 +4901,6 @@ self.C3_ExpressionFuncs = [
 			const v2 = p._GetNode(2).GetVar();
 			return () => f0(v1.GetValue(), v2.GetValue(), ",");
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => and("Kalan Görsel Sayısı : ", n0.ExpObject());
-		},
 		() => "Thing",
 		() => 12,
 		p => {
@@ -4900,6 +4911,12 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			const v1 = p._GetNode(1).GetVar();
 			return () => n0.ExpObject(v1.GetValue());
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => f0(v1.GetValue(), n2.ExpObject(), ",");
 		},
 		() => "food",
 		() => 7,
