@@ -26,6 +26,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch.Cnds.OnTouchObject,
 		C3.Plugins.Sprite.Cnds.IsVisible,
 		C3.Plugins.System.Acts.SetLayerVisible,
+		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Mouse.Acts.SetCursor,
@@ -64,7 +65,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Arr.Acts.Pop,
 		C3.Plugins.Arr.Acts.Push,
 		C3.Plugins.Arr.Exps.Back,
-		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Arr.Exps.Width,
 		C3.Behaviors.Flash.Acts.Flash,
 		C3.Plugins.System.Cnds.While,
@@ -120,6 +120,7 @@ self.C3_JsPropNameTable = [
 	{txt_word: 0},
 	{label: 0},
 	{bilgi_kutu: 0},
+	{bilgi_yazi: 0},
 	{butonlar: 0},
 	{musicDevam: 0},
 	{height: 0},
@@ -163,5 +164,6 @@ self.InstanceType = {
 	txt_word: class extends self.ITextInstance {},
 	label: class extends self.ITextInstance {},
 	bilgi_kutu: class extends self.ISpriteInstance {},
+	bilgi_yazi: class extends self.ITextInstance {},
 	butonlar: class extends self.ISpriteInstance {}
 }
