@@ -4945,15 +4945,11 @@ self.C3_ExpressionFuncs = [
 			return () => (f0("y") * 64);
 		},
 		() => "Right",
-		() => 3,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => (v0.GetValue() - 3);
-		},
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() - 2);
 		},
+		() => 3,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (f0("x") % 2);
