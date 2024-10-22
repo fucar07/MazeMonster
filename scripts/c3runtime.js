@@ -4893,7 +4893,7 @@ self.C3_ExpressionFuncs = [
 		() => "",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 50);
+			return () => (n0.ExpObject() + 30);
 		},
 		() => 1,
 		() => -20,
@@ -4901,9 +4901,9 @@ self.C3_ExpressionFuncs = [
 		() => "muzik",
 		() => "bilgi",
 		() => "background",
-		() => "How to play:\nMove the character using the control keys or joystick. Find the correct category for the word on the screen and take the character there. Good luck!\nInfo:\nSome English words are the same or similar in Turkish. By matching these words with the correct category, the student will realize that learning English can be easy.",
-		() => "Prepared by:\n.\n.\n.\n",
-		() => "Source:\n.\n.\n.\n",
+		() => "HOW TO PLAY:\nMove the character using the control keys or joystick. Find the correct category for the word on the screen and take the character there. Good luck!\n\nINFO:\nSome English words are the same or similar in Turkish. By matching these words with the correct category, the student will realize that learning English can be easy.",
+		() => "PREPARED BY:\n\nMurat ERTAÇ\nÖmür ÖZKAN ERGÜNEN\nAyşe BAŞ\nSibel AKASLAN\nFatih UÇAR\n",
+		() => "REFERENCE:\n\nMEB 2024 İlkokul İngilizce Dersi Öğretim Programı\n(1,2,3. Sınıflar), İZMİR\n\nVISUAL REFERENCE\nAşağıdaki ID numaraları verilmiş olan görseller, 07/02/2024-07/02/2025 tarihleri arasında telif bedeli ödenerek http://tr.123rf.com adresinden alınıp düzenlenerek kullanılmıştır.\n\n93380113-109876126-23414687-221800520-215844719-209850814\n207208327-19405713-72073301-3096988-235593665-109820902-80071346\n29849749-161431221",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
@@ -4981,19 +4981,21 @@ self.C3_ExpressionFuncs = [
 			const v2 = p._GetNode(2).GetVar();
 			return () => (((f0("y") * 64) + (64 * ((v1.GetValue()) === (1) ? 1 : 0))) - (64 * ((v2.GetValue()) === (3) ? 1 : 0)));
 		},
+		() => 768,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject();
+		},
+		() => 1536,
 		() => "Character",
+		() => 42,
+		() => 1680,
+		() => 820,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
 			return () => Math.round((f0(1, v1.GetValue()) * 64));
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject();
-		},
-		() => 42,
-		() => 1680,
-		() => 820,
 		() => 10,
 		() => "Category Door",
 		p => {
@@ -5007,6 +5009,10 @@ self.C3_ExpressionFuncs = [
 			return () => f0(v1.GetValue(), v2.GetValue(), ",");
 		},
 		() => 0.2,
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 64);
+		},
 		() => "Thing",
 		() => 12,
 		p => {
@@ -5024,18 +5030,6 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => f0(v1.GetValue(), n2.ExpObject(), ",");
 		},
-		() => "Lemon",
-		() => "Gorilla",
-		() => "Hamburger",
-		() => "Kangaroo",
-		() => "Panda",
-		() => "Pizza",
-		() => "Sandwich",
-		() => "Taxi",
-		() => "Train",
-		() => "Wagon",
-		() => "Yacht",
-		() => "Zebra",
 		() => "food",
 		() => 7,
 		() => "animal",
