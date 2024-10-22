@@ -83,7 +83,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Behaviors.EightDir.Acts.SetVectorX,
 		C3.Behaviors.EightDir.Acts.SetVectorY,
-		C3.Behaviors.EightDir.Acts.SetSpeed
+		C3.Behaviors.EightDir.Acts.SetSpeed,
+		C3.Plugins.Text.Acts.TypewriterText
 	];
 };
 self.C3_JsPropNameTable = [
@@ -129,6 +130,7 @@ self.C3_JsPropNameTable = [
 	{label: 0},
 	{txt_kalan: 0},
 	{txt_word: 0},
+	{txt_Tebrikler: 0},
 	{butonlar: 0},
 	{musicDevam: 0},
 	{height: 0},
@@ -173,5 +175,6 @@ self.InstanceType = {
 	label: class extends self.ITextInstance {},
 	txt_kalan: class extends self.ITextInstance {},
 	txt_word: class extends self.ITextInstance {},
+	txt_Tebrikler: class extends self.ITextInstance {},
 	butonlar: class extends self.ISpriteInstance {}
 }

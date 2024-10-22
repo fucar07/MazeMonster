@@ -4180,6 +4180,21 @@ err)}}};
 // scripts/shaders.js
 {
 self["C3_Shaders"] = {};
+self["C3_Shaders"]["crosshatch"] = {
+	glsl: "#ifdef GL_FRAGMENT_PRECISION_HIGH\n#define highmedp highp\n#else\n#define highmedp mediump\n#endif\nvarying mediump vec2 vTex;\nuniform lowp sampler2D samplerFront;\nuniform mediump vec2 srcStart;\nuniform mediump vec2 srcEnd;\nuniform highmedp float crosshatch_spacing;\nuniform highmedp float line_width;\nvoid main(void)\n{\nhighmedp vec4 front = texture2D(samplerFront, vTex);\nmediump vec2 tex = (vTex - srcStart) / (srcEnd - srcStart);\nhighmedp float lum = dot(front.rgb, vec3(0.2125, 0.7154, 0.0721));\nlowp vec3 colorToDisplay = vec3(1.0, 1.0, 1.0);\nif (lum < 1.00)\n{\nif (mod(tex.x + tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.75)\n{\nif (mod(tex.x - tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.50)\n{\nif (mod(tex.x + tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.3)\n{\nif (mod(tex.x - tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\ngl_FragColor = vec4(colorToDisplay * front.a, front.a);\n}",
+	glslWebGL2: "",
+	wgsl: "%%SAMPLERFRONT_BINDING%% var samplerFront : sampler;\n%%TEXTUREFRONT_BINDING%% var textureFront : texture_2d<f32>;\nstruct ShaderParams {\ncrosshatch_spacing : f32,\nline_width : f32\n};\n%%SHADERPARAMS_BINDING%% var<uniform> shaderParams : ShaderParams;\n%%C3PARAMS_STRUCT%%\n%%C3_UTILITY_FUNCTIONS%%\n%%FRAGMENTINPUT_STRUCT%%\n%%FRAGMENTOUTPUT_STRUCT%%\n@fragment\nfn main(input : FragmentInput) -> FragmentOutput\n{\nvar front : vec4<f32> = textureSample(textureFront, samplerFront, input.fragUV);\nvar tex : vec2<f32> = c3_srcToNorm(input.fragUV);\nvar lum : f32 = dot(front.rgb, vec3<f32>(0.2125, 0.7154, 0.0721));\nvar colorToDisplay : vec3<f32> = vec3<f32>(1.0, 1.0, 1.0);\nvar crosshatch_spacing : f32 = shaderParams.crosshatch_spacing;\nvar line_width : f32 = shaderParams.line_width;\nif (lum < 1.0)\n{\nif (c3_mod(tex.x + tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.75)\n{\nif (c3_mod(tex.x - tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.5)\n{\nif (c3_mod(tex.x + tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.3)\n{\nif (c3_mod(tex.x - tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nvar output : FragmentOutput;\noutput.color = vec4<f32>(colorToDisplay * front.a, front.a);\nreturn output;\n}",
+	blendsBackground: false,
+	usesDepth: false,
+	extendBoxHorizontal: 0,
+	extendBoxVertical: 0,
+	crossSampling: false,
+	mustPreDraw: false,
+	preservesOpaqueness: true,
+	supports3dDirectRendering: false,
+	animated: false,
+	parameters: [["crosshatch_spacing",0,"percent"],["line_width",0,"percent"]]
+};
 
 }
 
@@ -4902,8 +4917,8 @@ self.C3_ExpressionFuncs = [
 		() => "bilgi",
 		() => "background",
 		() => "HOW TO PLAY:\nMove the character using the control keys or joystick. Find the correct category for the word on the screen and take the character there. Good luck!\n\nINFO:\nSome English words are the same or similar in Turkish. By matching these words with the correct category, the student will realize that learning English can be easy.",
-		() => "PREPARED BY:\n\nMurat ERTAÇ\nÖmür ÖZKAN ERGÜNEN\nAyşe BAŞ\nSibel AKASLAN\nFatih UÇAR\n",
-		() => "REFERENCE:\n\nMEB 2024 İlkokul İngilizce Dersi Öğretim Programı\n(1,2,3. Sınıflar), İZMİR\n\nVISUAL REFERENCE\nAşağıdaki ID numaraları verilmiş olan görseller, 07/02/2024-07/02/2025 tarihleri arasında telif bedeli ödenerek http://tr.123rf.com adresinden alınıp düzenlenerek kullanılmıştır.\n\n93380113-109876126-23414687-221800520-215844719-209850814\n207208327-19405713-72073301-3096988-235593665-109820902-80071346\n29849749-161431221",
+		() => "PREPARED BY:\n\nMurat ERTAÇ\nÖmür ÖZKAN ERGÜNEN\nAyşe BAŞ\nSibel AKASLAN\nAysun TONYA\nFatih UÇAR\n",
+		() => "REFERENCE:\n\nMEB 2024 İlkokul İngilizce Dersi Öğretim Programı\n(2,3,4. Sınıflar), İZMİR\n\nVISUAL REFERENCES:\nAşağıdaki ID numaraları verilmiş olan görseller, 07/02/2024-07/02/2025 tarihleri arasında telif bedeli ödenerek http://tr.123rf.com adresinden alınıp düzenlenerek kullanılmıştır.\n\n93380113-109876126-23414687-221800520-215844719-209850814\n207208327-19405713-72073301-3096988-235593665-109820902-80071346\n29849749-161431221",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar();
@@ -5072,7 +5087,9 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpInstVar() * 10);
-		}
+		},
+		() => "WELL DONE!",
+		() => 4
 ];
 
 
