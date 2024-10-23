@@ -4180,20 +4180,20 @@ err)}}};
 // scripts/shaders.js
 {
 self["C3_Shaders"] = {};
-self["C3_Shaders"]["crosshatch"] = {
-	glsl: "#ifdef GL_FRAGMENT_PRECISION_HIGH\n#define highmedp highp\n#else\n#define highmedp mediump\n#endif\nvarying mediump vec2 vTex;\nuniform lowp sampler2D samplerFront;\nuniform mediump vec2 srcStart;\nuniform mediump vec2 srcEnd;\nuniform highmedp float crosshatch_spacing;\nuniform highmedp float line_width;\nvoid main(void)\n{\nhighmedp vec4 front = texture2D(samplerFront, vTex);\nmediump vec2 tex = (vTex - srcStart) / (srcEnd - srcStart);\nhighmedp float lum = dot(front.rgb, vec3(0.2125, 0.7154, 0.0721));\nlowp vec3 colorToDisplay = vec3(1.0, 1.0, 1.0);\nif (lum < 1.00)\n{\nif (mod(tex.x + tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.75)\n{\nif (mod(tex.x - tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.50)\n{\nif (mod(tex.x + tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.3)\n{\nif (mod(tex.x - tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3(0.0, 0.0, 0.0);\n}\n}\ngl_FragColor = vec4(colorToDisplay * front.a, front.a);\n}",
+self["C3_Shaders"]["burn"] = {
+	glsl: "varying mediump vec2 vTex;\nuniform lowp sampler2D samplerFront;\nuniform mediump vec2 srcStart;\nuniform mediump vec2 srcEnd;\nuniform lowp sampler2D samplerBack;\nuniform mediump vec2 destStart;\nuniform mediump vec2 destEnd;\nvoid main(void)\n{\nlowp vec4 front = texture2D(samplerFront, vTex);\nmediump vec2 tex = (vTex - srcStart) / (srcEnd - srcStart);\nlowp vec4 back = texture2D(samplerBack, mix(destStart, destEnd, tex));\nfront.rgb = 1.0 - ((1.0 - back.rgb) / (front.rgb * front.a));\ngl_FragColor = front * back.a;\n}",
 	glslWebGL2: "",
-	wgsl: "%%SAMPLERFRONT_BINDING%% var samplerFront : sampler;\n%%TEXTUREFRONT_BINDING%% var textureFront : texture_2d<f32>;\nstruct ShaderParams {\ncrosshatch_spacing : f32,\nline_width : f32\n};\n%%SHADERPARAMS_BINDING%% var<uniform> shaderParams : ShaderParams;\n%%C3PARAMS_STRUCT%%\n%%C3_UTILITY_FUNCTIONS%%\n%%FRAGMENTINPUT_STRUCT%%\n%%FRAGMENTOUTPUT_STRUCT%%\n@fragment\nfn main(input : FragmentInput) -> FragmentOutput\n{\nvar front : vec4<f32> = textureSample(textureFront, samplerFront, input.fragUV);\nvar tex : vec2<f32> = c3_srcToNorm(input.fragUV);\nvar lum : f32 = dot(front.rgb, vec3<f32>(0.2125, 0.7154, 0.0721));\nvar colorToDisplay : vec3<f32> = vec3<f32>(1.0, 1.0, 1.0);\nvar crosshatch_spacing : f32 = shaderParams.crosshatch_spacing;\nvar line_width : f32 = shaderParams.line_width;\nif (lum < 1.0)\n{\nif (c3_mod(tex.x + tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.75)\n{\nif (c3_mod(tex.x - tex.y, crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.5)\n{\nif (c3_mod(tex.x + tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nif (lum < 0.3)\n{\nif (c3_mod(tex.x - tex.y - (crosshatch_spacing / 2.0), crosshatch_spacing) <= line_width)\n{\ncolorToDisplay = vec3<f32>(0.0, 0.0, 0.0);\n}\n}\nvar output : FragmentOutput;\noutput.color = vec4<f32>(colorToDisplay * front.a, front.a);\nreturn output;\n}",
-	blendsBackground: false,
+	wgsl: "%%SAMPLERFRONT_BINDING%% var samplerFront : sampler;\n%%TEXTUREFRONT_BINDING%% var textureFront : texture_2d<f32>;\n%%SAMPLERBACK_BINDING%% var samplerBack : sampler;\n%%TEXTUREBACK_BINDING%% var textureBack : texture_2d<f32>;\n%%FRAGMENTINPUT_STRUCT%%\n%%FRAGMENTOUTPUT_STRUCT%%\n@fragment\nfn main(input : FragmentInput) -> FragmentOutput\n{\nvar front : vec4<f32> = textureSample(textureFront, samplerFront, input.fragUV);\nvar back : vec4<f32> = textureSample(textureBack, samplerBack, c3_getBackUV(input.fragPos.xy, textureBack));\nvar output : FragmentOutput;\noutput.color = vec4<f32>(\nvec3<f32>(1.0) - ((vec3<f32>(1.0) - back.rgb) / (front.rgb * front.a)),\nfront.a\n) * back.a;\nreturn output;\n}",
+	blendsBackground: true,
 	usesDepth: false,
 	extendBoxHorizontal: 0,
 	extendBoxVertical: 0,
 	crossSampling: false,
 	mustPreDraw: false,
-	preservesOpaqueness: true,
+	preservesOpaqueness: false,
 	supports3dDirectRendering: false,
 	animated: false,
-	parameters: [["crosshatch_spacing",0,"percent"],["line_width",0,"percent"]]
+	parameters: []
 };
 
 }
