@@ -136,7 +136,6 @@ self.C3_JsPropNameTable = [
 	{txt_kalan: 0},
 	{txt_word: 0},
 	{txt_Tebrikler: 0},
-	{Text: 0},
 	{butonlar: 0},
 	{musicDevam: 0},
 	{height: 0},
@@ -185,6 +184,5 @@ self.InstanceType = {
 	txt_kalan: class extends self.ITextInstance {},
 	txt_word: class extends self.ITextInstance {},
 	txt_Tebrikler: class extends self.ITextInstance {},
-	Text: class extends self.ITextInstance {},
 	butonlar: class extends self.ISpriteInstance {}
 }
