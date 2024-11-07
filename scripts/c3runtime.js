@@ -5011,7 +5011,7 @@ self.C3_ExpressionFuncs = [
 		() => 32,
 		() => 1632,
 		() => 864,
-		() => 10,
+		() => 12,
 		() => "Category Door",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -5023,6 +5023,10 @@ self.C3_ExpressionFuncs = [
 			const v2 = p._GetNode(2).GetVar();
 			return () => f0(v1.GetValue(), v2.GetValue(), ",");
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 64);
+		},
 		() => "food",
 		() => 0.2,
 		() => "animal",
@@ -5033,7 +5037,6 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() - 64);
 		},
 		() => "Thing",
-		() => 12,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.round(f0(0, 11));
@@ -5087,6 +5090,7 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpInstVar() * 10);
 		},
+		() => 10,
 		() => "WELL DONE!",
 		() => 4
 ];

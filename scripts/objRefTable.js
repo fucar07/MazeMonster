@@ -86,6 +86,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.EightDir.Acts.SetVectorX,
 		C3.Behaviors.EightDir.Acts.SetVectorY,
 		C3.Behaviors.EightDir.Acts.SetSpeed,
+		C3.Plugins.System.Cnds.PickAll,
 		C3.Plugins.Text.Acts.TypewriterText
 	];
 };
@@ -126,6 +127,7 @@ self.C3_JsPropNameTable = [
 	{arkaplan: 0},
 	{tebrikler: 0},
 	{sprMebLogo: 0},
+	{sprBos: 0},
 	{DragDrop: 0},
 	{drag: 0},
 	{dist: 0},
@@ -176,6 +178,7 @@ self.InstanceType = {
 	arkaplan: class extends self.ISpriteInstance {},
 	tebrikler: class extends self.ISpriteInstance {},
 	sprMebLogo: class extends self.ISpriteInstance {},
+	sprBos: class extends self.ISpriteInstance {},
 	drag: class extends self.ISpriteInstance {},
 	joystick: class extends self.ISpriteInstance {},
 	touchBG: class extends self.ISpriteInstance {},
